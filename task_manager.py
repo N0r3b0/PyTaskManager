@@ -24,7 +24,19 @@ class TaskManager:
     def save_task_list(self, file: str):
         with open(f"{file}.json", 'w') as f:
             json.dump(self.task_list, f, indent=2)
-            
+
+
+    def show_tasks(self):
+        print("📋 Task List:")
+        print("-" * 40)
+        for task_id, task in self.task_list.items():
+            status_icon = "✅" if task["status"] == "done" else "❌"
+            print(f"ID: {task_id}")
+            print(f"Name: {task['name']}")
+            print(f"Description: {task['description']}")
+            print(f"Status: {task['status']} {status_icon}")
+            print("-" * 40)
+
     
     # TASK MANAGMENT
 
@@ -41,4 +53,10 @@ class TaskManager:
         self.task_list[task_id] = task.to_dict()
         print(f"Task added with ID {task_id}")
 
+    def remove_task(self, id: str):
+        try:
+            self.task_list.pop(id)
+            print(f"Task with ID {id} removed")
+        except:
+            print("Wrong task id")
     

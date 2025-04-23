@@ -6,8 +6,8 @@ parser = argparse.ArgumentParser(description="Program for managing your tasks")
 
 parser.add_argument("-l", "--list", type=str, help="name of the tasks list")
 parser.add_argument("-c", "--create", type=str, help="create a new tasks list")
-parser.add_argument("-a", "--add", nargs='+', help="use -l to choose list, add new tasks into the list")
-parser.add_argument("-d", "--delete", nargs='+', help="use -l to choose list, delete tasks from the list")
+parser.add_argument("-a", "--add", nargs='+', help="adds new task. Use -l to choose the list and than -a with 3 possible arguments (name required): name description status. Status options: true, yes, 1, done")
+parser.add_argument("-d", "--delete", type=str, help="deletes the task. Use -l to choose the list and than -a with an id of the task you want to remove")
 parser.add_argument("-u", "--update", action="store_true", help="use -l to choose list, update task on the list")
 parser.add_argument("-s", "--show", action="store_true", help="show all lists or 1 list if used with -l")
 parser.add_argument("-v", "--version", action="store_true", help="program version and repository location")
@@ -41,8 +41,10 @@ if args.list and args.add:  # Buy milk' 'Remember to get almond milk' 'false'
     pass
 
 if args.list and args.delete:
-    # usun zadanie z listy
-    pass
+    # remove task from the list
+    task.remove_task(args.delete)
+    task.save_task_list(args.list)
+    
 
 if args.list and args.update:
     # update zadania na liście
@@ -50,6 +52,7 @@ if args.list and args.update:
 
 
 if args.list and args.show:
+    task.show_tasks()
     pass
 if args.show:
     pass
