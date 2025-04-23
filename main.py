@@ -33,8 +33,10 @@ if args.list:
     task.open_task_list(args.list)
     pass
 
-if args.list and args.add:
-    # dodaj zadania lub zadanie do listy
+if args.list and args.add:  # Buy milk' 'Remember to get almond milk' 'false'
+    # add task to the list 
+    # [0] name [1] desc [2] done
+    task.add_task(args.add)
     pass
 
 if args.list and args.delete:

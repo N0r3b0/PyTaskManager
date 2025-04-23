@@ -4,10 +4,6 @@ from task import Task
 class TaskManager:
     task_list: dict
 
-    def __init__(self):
-        pass
-
-
 
     def create_task_list(self, file: str):
         try:
@@ -23,6 +19,13 @@ class TaskManager:
                 self.task_list = json.load(f)
         except:
             print(f"The list {file} does not exist")
+
+    
+    # TASK MANAGMENT
+    def add_task(self, details):
+        # details -> name, desc, status
+        task = Task(details)
+        # print(task.name, task.description, task.status)
         
         
         
