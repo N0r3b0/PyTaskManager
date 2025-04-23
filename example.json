@@ -1,0 +1,7 @@
+{
+    "name": "Alice",
+    "age": 30,
+    "is_student": false,
+    "skills": ["Python", "SQL", "Data Analysis"]
+  }
+  
