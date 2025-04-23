@@ -1,7 +1,12 @@
 {
-    "name": "Alice",
-    "age": 30,
-    "is_student": false,
-    "skills": ["Python", "SQL", "Data Analysis"]
+  "1": {
+    "name": "zadanie",
+    "description": "opis",
+    "status": "not_done"
+  },
+  "2": {
+    "name": "umyj",
+    "description": "dupe",
+    "status": "done"
   }
-  
+}

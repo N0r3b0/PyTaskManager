@@ -37,6 +37,7 @@ if args.list and args.add:  # Buy milk' 'Remember to get almond milk' 'false'
     # add task to the list 
     # [0] name [1] desc [2] done
     task.add_task(args.add)
+    task.save_task_list(args.list)
     pass
 
 if args.list and args.delete:
