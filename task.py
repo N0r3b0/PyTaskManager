@@ -8,7 +8,6 @@ class Status(Enum):
         return self.name.lower()
 
 class Task:
-    id: int = 0
     name: str = ""
     description: str = ""
     status: Status = Status.NOT_DONE

@@ -15,29 +15,32 @@ class TaskManager:
     def save_tasklists(self, file: str):
         id = self.generate_id(self.task_lists)
         self.task_lists.update({id: {'task_list_name': file}})
-        with open("task_lists.json", 'w') as f:
+        with open("data/task_lists.json", 'w') as f:
                 json.dump(self.task_lists, f, indent=2)
     
     def open_tasklists(self):
-        if os.path.getsize("task_lists.json") == 0:
-            return  # Do nothing if the file is empty
-        with open("task_lists.json", 'r') as f:
-            self.task_lists = json.load(f)
+        try:
+            if os.path.getsize("data/task_lists.json") != 0:
+                with open("data/task_lists.json", 'r') as f:
+                    self.task_lists = json.load(f)
+        except FileNotFoundError:
+            file = open("data/task_lists.json", 'w')
+            file.close()
     
     def clear_tasklists(self):
         for id, name in self.task_lists.items():
-            if os.path.exists(f"{name['task_list_name']}.json"):
-                os.remove(f"{name['task_list_name']}.json")
-                print(f"{name['task_list_name']}.json has been removed")
-        with open("task_lists.json", 'w') as f:
-                print("All task lists has been cleared")
+            if os.path.exists(f"data/{name['task_list_name']}.json"):
+                os.remove(f"data/{name['task_list_name']}.json")
+                print(f"data/{name['task_list_name']}.json has been removed")
+        with open("data/task_lists.json", 'w') as f:
+                print("All task lists have been cleared")
         
 
 
     # TASKLIST
     def create_task_list(self, file: str):
         try:
-            with open(f"{file}.json", 'x') as f:  # 'x' creates file, raises FileExistsError if it exists
+            with open(f"data/{file}.json", 'x') as f:  # 'x' creates file, raises FileExistsError if it exists
                 print(f"Task list {file} created") 
                 self.save_tasklists(file)
         except FileExistsError:
@@ -46,7 +49,7 @@ class TaskManager:
    
     def open_task_list(self, file: str):
         try:
-            with open(f"{file}.json", 'r') as f:
+            with open(f"data/{file}.json", 'r') as f:
                 content = f.read().strip()
                 self.task_list = json.loads(content) if content else {}
 
@@ -56,8 +59,12 @@ class TaskManager:
 
 
     def save_task_list(self, file: str):
-        with open(f"{file}.json", 'w') as f:
+        with open(f"data/{file}.json", 'w') as f:
             json.dump(self.task_list, f, indent=2)
+
+    def clear_task_list(self, file: str):
+        with open(f"data/{file}.json", 'w') as f:
+                print("List has been cleared")
             
 
     def show_tasklists(self):
@@ -87,10 +94,22 @@ class TaskManager:
         self.task_list[task_id] = task.to_dict()
         print(f"Task added with ID {task_id}")
 
+
     def remove_task(self, id: str):
         try:
             self.task_list.pop(id)
             print(f"Removed task with ID: {id} ")
         except:
             print("Wrong task id")
+    
+
+    def update_task(self, details: dict):
+        # details -> --id --name, --desc, --status
+        task_id = str(details["id"])
+        if details.get("name"):
+            self.task_list[task_id]["name"] = details["name"]
+        if details.get("description"):
+            self.task_list[task_id]["description"] = details["description"]
+        if details.get("status"):
+            self.task_list[task_id]["status"] = details["status"]
     
